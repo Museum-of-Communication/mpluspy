@@ -1,6 +1,7 @@
 import requests
 import xmltodict
 
+
 class MPlusResponse:
     """
     Wrapper for `requests.Response` extending it by some additional helper methods.
@@ -23,8 +24,8 @@ class MPlusResponse:
         data = self.xml_to_dict()
         if data:
             result = []
-            for item in data['application']['modules']['module']['moduleItem']:
-                result.append(item['@id'])
+            for item in data["application"]["modules"]["module"]["moduleItem"]:
+                result.append(item["@id"])
             return result
         return None
 
@@ -35,7 +36,7 @@ class MPlusResponse:
         """
         data = self.xml_to_dict()
         if data:
-            return data['application']['modules']['module']['@totalSize']
+            return data["application"]["modules"]["module"]["@totalSize"]
         return None
 
     def __getattr__(self, name):

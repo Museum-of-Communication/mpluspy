@@ -1,8 +1,8 @@
 import pytest
 import requests
 from unittest.mock import MagicMock
-import xmltodict
 from mpluspy import MPlusResponse
+
 
 @pytest.fixture
 def mock_xml_response():
@@ -28,12 +28,14 @@ def mock_xml_response():
     </application>"""
     return response
 
+
 @pytest.fixture
 def mock_non_xml_response():
     response = MagicMock(spec=requests.Response)
     response.headers = {"Content-Type": "application/json"}
     response.text = '{"key": "value"}'
     return response
+
 
 def test_xml_to_dict(mock_xml_response):
     mplus_response = MPlusResponse(mock_xml_response)
@@ -42,23 +44,28 @@ def test_xml_to_dict(mock_xml_response):
     assert "application" in parsed_data
     assert "modules" in parsed_data["application"]
 
+
 def test_xml_to_dict_invalid_content(mock_non_xml_response):
     mplus_response = MPlusResponse(mock_non_xml_response)
     assert mplus_response.xml_to_dict() is None
+
 
 def test_parse_IDs(mock_xml_response):
     mplus_response = MPlusResponse(mock_xml_response)
     ids = mplus_response.parse_IDs()
     assert ids == ["123", "456"]
 
+
 def test_parse_IDs_invalid_content(mock_non_xml_response):
     mplus_response = MPlusResponse(mock_non_xml_response)
     assert mplus_response.parse_IDs() is None
+
 
 def test_parse_size(mock_xml_response):
     mplus_response = MPlusResponse(mock_xml_response)
     size = mplus_response.parse_size()
     assert size == "2"
+
 
 def test_parse_size_invalid_content(mock_non_xml_response):
     mplus_response = MPlusResponse(mock_non_xml_response)

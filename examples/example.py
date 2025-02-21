@@ -1,20 +1,24 @@
 from mpluspy import MPlusClient
 from datetime import datetime
 
-AUTH = ('user', 'pass') # replace with your credentials
+AUTH = ("user", "pass")  # replace with your credentials
 
 
 # creating new client with example config
-client = MPlusClient('example.yml', auth=AUTH)
+client = MPlusClient("example.yml", auth=AUTH)
 
 # XML placeholders for paging and timestamp
-TIMESTAMP = datetime(2025, 1, 1) # this is used in the request to query any assets modified after this date
-XML_PLACEHOLDERS = {'limit': 10,
-                    'offset': 0,
-                    'timestamp': MPlusClient.format_timestamp(TIMESTAMP)}
+TIMESTAMP = datetime(
+    2025, 1, 1
+)  # this is used in the request to query any assets modified after this date
+XML_PLACEHOLDERS = {
+    "limit": 10,
+    "offset": 0,
+    "timestamp": MPlusClient.format_timestamp(TIMESTAMP),
+}
 
 # execute request
-response = client.request('example-request', xml_placeholders=XML_PLACEHOLDERS)
+response = client.request("example-request", xml_placeholders=XML_PLACEHOLDERS)
 
 print("whole response:")
 print(response.content)
