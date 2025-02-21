@@ -1,0 +1,16 @@
+<application xmlns="http://www.zetcom.com/ria/ws/module/search">
+    <modules>
+        <module name="Multimedia">
+            <search limit="{limit}" offset="{offset}">
+                <select>
+                    <field fieldPath="__id"/>
+                </select>
+                <expert>
+                    <and>
+                        <greaterEquals fieldPath="__lastModified" operand="{timestamp}"/>
+                    </and>
+                </expert>
+            </search>
+        </module>
+    </modules>
+</application>

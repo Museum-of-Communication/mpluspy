@@ -1,0 +1,26 @@
+Draft:
+
+- general Info
+    - simple client for mplus api
+    - using config files for requests as mplus instances can be highli configurable
+    - config uses a simple schema following the documentation of zetcom
+- installation with pipenv
+- usage:
+    - requests configured in files and passed to client 
+    - executing request
+    - response with additional helpers
+        - if request returns xml. e.g. for search requests: result can be parsed to dict for simpler handling (using xmltodict)
+        - parsing ids
+        - parsing size of search result
+    - config.yml:
+        - needed keys etc. like in docstring
+        - example request with url placeholder
+        - example with xml body
+    - request.xml:
+        - according to zetcom docs
+        - placeholders
+        - example for search request with timestamp and paging
+        - using timestamps!
+        - example for reports
+        - example for saved search. this allows control over search parameters in mplus frontend for nontechnical users
+- license

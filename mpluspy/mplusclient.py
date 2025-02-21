@@ -1,14 +1,21 @@
 import requests
 import yaml
+import datetime
+from .mplusresponse import MPlusResponse
 
 class MPlusClient:
+    """
+    Simple client for Zetcom's MuseumPlus using YAML and XML configuration files to define
+    specific requests. This way API calls can be tailored to each application and data model used
+    by an MuseumPlus instance (e.g. including custom fields, reports, saved searches etc.)
+    """
 
-    def __init__(self, configFile: str, auth=('user', 'pass')):
+    def __init__(self, config_file: str, auth=('user', 'pass')):
         """
         Sets up MPlusClient from predefined config.yml.
 
         Args:
-            configFile (str): The filename of a local YAML configuration file.
+            config_file (str): The filename of a local YAML configuration file.
                 This file defines API request settings and the base URL.
             auth (tuple, optional): A tuple containing a username and password.
                 Defaults to ('user', 'pass').
@@ -28,7 +35,9 @@ class MPlusClient:
                 - **headers** (dict): HTTP headers, including:
                     - **Content-Type** (str): e.g., "application/xml".
                     - **Accept** (str): e.g., "application/xml".
-                - **xml-body** (str, optional): Specifies additional data to be sent with the request.
+                - **xml-body** (str, optional): Specifies additional data to be sent for POST requests.
+                  Check Zetcom's [Documentation](https://docs.zetcom.com/framework-public/ws/ws-api-module.html)
+                  for all available possibilites.
 
         Usage and URL Placeholders:
             - The request name will be passed as a parameter to `apiRequest(request: str)`.
@@ -66,22 +75,39 @@ class MPlusClient:
             ```
         """
         self.auth = auth
-        with open(configFile, 'r') as f:
+        with open(config_file, 'r') as f:
             self.config = yaml.load(f, Loader=yaml.FullLoader)
 
-    def apiRequest(self, request: str, url_placeholders: dict = {}, xml_placeholders: dict = {})
-        url = config['baseurl'] + config[request]
-        url = url.format_map(url_placeholders)
+    def request(self, request: str, url_placeholders: dict = {}, xml_placeholders: dict = {}):
+        """
+        Executes configured request to MuseumPlus API and returns a `MPlusResponse` object wrapping `requests.Response`
 
-    def __get():
+        Args:
+            request (str): Name of the request as used in the YAML configuration.
+            url_placeholders (dict, optional): A dict containing values for placeholders in the request url.
+            xml_placeholders (dict, optional): A dict containing values for placeholders in the request xml data.
 
-    def __post():
-        # get request parameters from config
-        url = self.BASEURL + config[config_name]['url']
-        headers = config[config_name]['headers']
+        Raises:
+            KeyError: If the request name does not match the keys in the config file, the config file is not formatted according to
+                requirements or placeholders are not matching.
+            FileNotFoundError: If an xml file specified in the YAML configuration does not exist.
+        """
+        method = self.config[request]['type']
+        url = self.__request_url(request, placeholders=url_placeholders)
+        data = self.__request_data(request, placeholders=xml_placeholders)
+        response = requests.request(method, url, data=data, auth=self.auth)
+        return MPlusResponse(response)
 
-        # get request body and replace placeholders
-        with open(config[config_name]['xml-body'], 'r') as f:
-            data = f.read().format_map(placeholders)
+    @staticmethod
+    def format_timestamp(timestamp: datetime.datetime) -> str:
+        """Helper for returning formatted timestamp for MPlus API for a given datetime object"""
+        return timestamp.strftime('%Y-%m-%dT%H:%M:%S.') + f'{timestamp.microsecond // 1000:03d}Z'
 
-        return requests.post(url, headers=headers, data=data, auth=self.auth)
+    def __request_url(self, request: str, placeholders: dict = {}):
+        url = self.config['baseurl'] + self.config[request]['url']
+        return url.format_map(placeholders)
+
+    def __request_data(self, request: str, placeholders: dict = {}):
+        if 'xml-body' in self.config[request]:
+            with open(self.config[request]['xml-body'], 'r') as f:
+                return f.read().format_map(placeholders)

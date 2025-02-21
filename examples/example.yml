@@ -1,0 +1,10 @@
+baseurl: "https://example.zetcom.com/MpWeb/" # user url to your MPlus Instance here
+
+# MPlus API request definitions
+example-request:
+  type: "POST"
+  url: "ria-ws/application/module/Multimedia/search"
+  headers:
+    Content-Type: "application/xml"
+    Accept: "application/xml"
+  xml-body: "example.xml"

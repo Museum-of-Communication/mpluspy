@@ -5,5 +5,5 @@ setup(
     version="1.0.0",
     description="Client for Zetcom's Museum Plus API",
     packages=find_packages(),  # Automatically finds all packages
-    install_requires=["requests", "pyaml"],
+    install_requires=["requests", "pyaml", "xmltodict"],
 )

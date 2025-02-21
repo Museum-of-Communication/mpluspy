@@ -1,3 +1,4 @@
-__all__ = ["mplusclient"]
+__all__ = ["mplusclient", "mplusresponse"]
 
 from .mplusclient import MPlusClient
+from .mplusresponse import MPlusResponse
