@@ -1,0 +1,25 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "mpluspy"
+version = "1.0.0"
+description = "Client for Zetcom's Museum Plus API"
+authors = ["Nicolas Kessler"]
+license = "MIT"
+readme = "README.md"
+# repository = "https://github.com/yourusername/mpluspy"
+# homepage = "https://github.com/yourusername/mpluspy"
+packages = [{ include = "mpluspy" }]
+
+[tool.poetry.dependencies]
+python = ">=3.7"
+requests = "*"
+pyaml = "*"
+xmltodict = "*"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "*"
+black = "*"
+flake8 = "*"
