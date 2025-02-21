@@ -9,8 +9,8 @@ description = "Client for Zetcom's Museum Plus API"
 authors = ["Nicolas Kessler"]
 license = "MIT"
 readme = "README.md"
-# repository = "https://github.com/yourusername/mpluspy"
-# homepage = "https://github.com/yourusername/mpluspy"
+repository = "https://github.com/Museum-of-Communication/mpluspy"
+homepage = "https://github.com/Museum-of-Communication/mpluspy"
 packages = [{ include = "mpluspy" }]
 
 [tool.poetry.dependencies]
