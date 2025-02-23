@@ -1,6 +1,12 @@
 # mpluspy
 `mpluspy` is a Python package intended to work with Zetcom's MuseumPlus API. The API requests are highly configurable, and setup is done using YAML and XML configuration files. This allows tailoring the client to specific use cases and custom data models of any given MuseumPlus instance. The configuration uses a simple schema and follows the official [documentation](https://docs.zetcom.com/framework-public/ws/ws-api-module.html) from Zetcom.
 
+## Instalation
+Install from this repository:
+```shell
+$ pip install git+https://github.com/Museum-of-Communication/mpluspy.git
+```
+
 ## Basic Usage
 API requests are configured in a YAML file with additional XML files that are passed to `MPlusClient`:
 
@@ -19,7 +25,7 @@ response = client.request("example-request")
 The YAML configuration file must contain the following keys:
 
 - **baseurl**: The base URL for the API.
-- **<request-name>**: Defines an API request configuration.
+- **\<request-name\>**: Defines an API request configuration.
     - **type**: HTTP method, e.g., "POST".
     - **url**: API endpoint path, which may contain placeholders like `{id}`.
     - **headers**: HTTP headers, including:
