@@ -12,7 +12,7 @@ API requests are configured in a YAML file with additional XML files that are pa
 
 ```python
 from mpluspy import MPlusClient
-client = MPlusClient("config.yml")
+client = MPlusClient("config.yml", auth=("user", "pass")
 ```
 
 Execute requests defined in the configuration. This returns an `MPlusResponse`:
