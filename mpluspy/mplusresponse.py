@@ -22,12 +22,13 @@ class MPlusResponse:
         request was no module search request) None is returned
         """
         data = self.xml_to_dict()
-        if data:
-            result = []
-            for item in data["application"]["modules"]["module"]["moduleItem"]:
-                result.append(item["@id"])
-            return result
-        return None
+        if not data:
+            return None
+
+        try:
+            return [item["@id"] for item in data["application"]["modules"]["module"]["moduleItem"]]
+        except KeyError:
+            return None
 
     def parse_size(self):
         """
@@ -35,9 +36,13 @@ class MPlusResponse:
         the request was not a search request) None is returned.
         """
         data = self.xml_to_dict()
-        if data:
+        if not data:
+            return None
+
+        try:
             return data["application"]["modules"]["module"]["@totalSize"]
-        return None
+        except KeyError:
+            return None
 
     def __getattr__(self, name):
         return getattr(self._response, name)
