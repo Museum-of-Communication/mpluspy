@@ -64,7 +64,7 @@ def test_parse_IDs_invalid_content(mock_non_xml_response):
 def test_parse_size(mock_xml_response):
     mplus_response = MPlusResponse(mock_xml_response)
     size = mplus_response.parse_size()
-    assert size == "2"
+    assert size == 2
 
 
 def test_parse_size_invalid_content(mock_non_xml_response):

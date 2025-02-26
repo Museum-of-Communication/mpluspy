@@ -40,7 +40,7 @@ class MPlusResponse:
             return None
 
         try:
-            return data["application"]["modules"]["module"]["@totalSize"]
+            return int(data["application"]["modules"]["module"]["@totalSize"])
         except KeyError:
             return None
 
