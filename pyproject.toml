@@ -14,7 +14,7 @@ homepage = "https://github.com/Museum-of-Communication/mpluspy"
 packages = [{ include = "mpluspy" }]
 
 [tool.poetry.dependencies]
-python = ">=3.8"
+python = ">=3.10"
 requests = "*"
 pyaml = "*"
 xmltodict = "*"
